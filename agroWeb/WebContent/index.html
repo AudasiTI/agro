@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="agroWeb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agro Web</title>
+<!-- Styles -->
+<link href="content/css/bootstrap.min.css" rel="stylesheet">
+<link href="content/css/bootstrap-responsive.min.css" rel="stylesheet">
+<link href="content/css/font-awesome.min.css" rel="stylesheet">
+<link href="content/css/bootswatch.css" rel="stylesheet">
+</head>
+<body>
+	<div class="navbar navbar-fixed-top navbar-inverse">
+		<div class="navbar-inner">
+			<div class="container">
+				<a class="btn btn-navbar" data-toggle="collapse"
+					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span>
+				</a> <a class="brand" href="#">Fazenda Digital</a>
+				<div class="nav-collapse">
+					<ul class="nav">
+
+						<li><a href="#/">Home</a></li>
+						<li><a href="#/fazenda">Fazendas</a></li>
+						<li><a href="#/safra">Safras</a></li>
+
+					</ul>
+				</div>
+				<form class="navbar-form pull-right">
+					<img src="content/img/ajax-loader.gif" ng-show="showLoaderFlag"
+						class="pull-right">
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="container" ng-view style="margin-top: 50px"></div>
+</body>
+<!-- JavaScript -->
+<!-- Libs -->
+<script src="content/lib/jquery.min.js"></script>
+<script src="content/lib/jquery.smooth-scroll.min.js"></script>
+<script src="content/lib/bootstrap.min.js"></script>
+<script src="content/lib/bootswatch.js"></script>
+<script src="content/lib/angular.min.js"></script>
+<script src="content/lib/angular-resource.min.js"></script>
+<script src="app/app.js"></script>
+
+<!--Controllers-->
+<script src="app/fazenda/fazendaController.js"></script>
+</body>
+
+</html>
