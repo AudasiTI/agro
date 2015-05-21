@@ -19,7 +19,7 @@ public class Fazenda implements java.io.Serializable {
 	/**
 	 * 
 	 */
-	
+
 	@Id
 	@Generated(GenerationTime.INSERT)
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,7 +31,7 @@ public class Fazenda implements java.io.Serializable {
 
 	@Column(name = "ativo", nullable = false)
 	private Boolean ativo;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "idConta", nullable = false)
 	private Conta conta;
@@ -60,7 +60,7 @@ public class Fazenda implements java.io.Serializable {
 		this.ativo = ativo;
 	}
 
-    public Conta getConta() {
+	public Conta getConta() {
 		return conta;
 	}
 
@@ -68,6 +68,4 @@ public class Fazenda implements java.io.Serializable {
 		this.conta = conta;
 	}
 
-	public Fazenda() {
-    }
 }

@@ -1,53 +1,114 @@
-<!DOCTYPE html>
-<html ng-app="agroWeb">
+﻿<!DOCTYPE html>
+<html data-ng-app="agroWebApp">
 <head>
-<meta charset="utf-8">
+<title>Fazenda Digital</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agro Web</title>
-<!-- Styles -->
-<link href="content/css/bootstrap.min.css" rel="stylesheet">
-<link href="content/css/bootstrap-responsive.min.css" rel="stylesheet">
-<link href="content/css/font-awesome.min.css" rel="stylesheet">
-<link href="content/css/bootswatch.css" rel="stylesheet">
+<link href="Content/bootstrap.css" rel="stylesheet" />
+<link href="Content/animations.css" rel="stylesheet" />
+<link href="Content/styles.css" rel="stylesheet" />
 </head>
-<body>
-	<div class="navbar navbar-fixed-top navbar-inverse">
-		<div class="navbar-inner">
-			<div class="container">
-				<a class="btn btn-navbar" data-toggle="collapse"
-					data-target=".nav-collapse"> <span class="icon-bar"></span> <span
-					class="icon-bar"></span> <span class="icon-bar"></span>
-				</a> <a class="brand" href="#">Fazenda Digital</a>
-				<div class="nav-collapse">
-					<ul class="nav">
+<body data-ng-cloak="">
 
-						<li><a href="#/">Home</a></li>
-						<li><a href="#/fazenda">Fazendas</a></li>
-						<li><a href="#/safra">Safras</a></li>
+	<header class="navbar navbar-inner navbar-fixed-top"
+		data-ng-controller="NavbarController as vm">
+		<nav class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle"
+					data-ng-click="vm.isCollapsed = !vm.isCollapsed">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/"> <img
+					src="Content/images/people.png" alt="logo"> <span
+					class="appTitle">{{ vm.appTitle }}</span>
+				</a>
+			</div>
+			<div class="nav-container" data-collapse="isCollapsed">
 
-					</ul>
+				<!-- With menu-highlighter directive -->
+				<ul class="nav navbar-nav nav-pills navBarPadding"
+					data-menu-highlighter data-highlight-class-name="active">
+					<li><a href="#/fazenda">Fazendas</a></li>
+					<li id="nav-login" data-ng-click="vm.loginOrOut()">
+						<!-- href not used but needed to compare against path in menu-highlighter -->
+						<a data-href="#/login">{{ vm.loginLogoutText }}</a>
+					</li>
+				</ul>
+
+				<!-- Without menu-highlighter directive -->
+				<!--<ul class="nav navbar-nav nav-pills navBarPadding">
+                    <li data-ng-class="{'active':highlight('/customers')}"><a href="#/customers">Customers</a></li>
+                    <li data-ng-class="{'active':highlight('/orders')}"><a href="#/orders">Orders</a></li>
+                    <li data-ng-class="{'active':highlight('/about')}"><a href="#/about">About</a></li>
+                    <li data-ng-class="{'active':highlight('/login')}" id="nav-login"
+                        data-ng-click="loginOrOut()">
+                        <a>{{ loginLogoutText }}</a>
+                    </li>
+                </ul>-->
+			</div>
+		</nav>
+	</header>
+
+	<div class="slide-animation-container">
+		<div data-ng-view id="ng-view" class="slide-animation"></div>
+	</div>
+
+	<div id="footer">
+		<div class="navbar navbar-fixed-bottom">
+			<div class="navbar-inner footer">
+				<div class="container">
+					<footer>
+						<div class="row">
+							<div class="col-md-12">
+								Created by <a href="http://twitter.com/DanWahlin"
+									target="_blank">Dan Wahlin</a>
+							</div>
+						</div>
+					</footer>
 				</div>
-				<form class="navbar-form pull-right">
-					<img src="content/img/ajax-loader.gif" ng-show="showLoaderFlag"
-						class="pull-right">
-				</form>
 			</div>
 		</div>
 	</div>
-	<div class="container" ng-view style="margin-top: 50px"></div>
-</body>
-<!-- JavaScript -->
-<!-- Libs -->
-<script src="content/lib/jquery.min.js"></script>
-<script src="content/lib/jquery.smooth-scroll.min.js"></script>
-<script src="content/lib/bootstrap.min.js"></script>
-<script src="content/lib/bootswatch.js"></script>
-<script src="content/lib/angular.min.js"></script>
-<script src="content/lib/angular-resource.min.js"></script>
-<script src="app/app.js"></script>
 
-<!--Controllers-->
-<script src="app/fazenda/fazendaController.js"></script>
-</body>
+	<div data-wc-overlay data-wc-overlay-delay="300">
+		<br /> <img src="Content/images/spinner.gif" />&nbsp;&nbsp;Loading
+	</div>
 
+	<!-- 3rd party libraries -->
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-route.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
+	<script src="Scripts/angular-ui-bootstrap.js"></script>
+	<script src="Scripts/tweenMax.min.js"></script>
+
+	<!-- To use breeze change the app/customersApp/services/config.js useBreeze property to true -->
+	<script src="Scripts/breeze.min.js"></script>
+	<script src="Scripts/breeze.angular.js"></script>
+
+	<!-- Custom scripts -->
+	<script src="app/wc.directives/directives/wcOverlay.js"></script>
+	<script src="app/wc.directives/directives/menuHighlighter.js"></script>
+	<script src="app/agroWebApp/app.js"></script>
+	<script src="app/agroWebApp/animations/listAnimations.js"></script>
+	<script src="app/agroWebApp/directives/wcUnique.js"></script>
+	<script src="app/agroWebApp/filters/nameCityStateFilter.js"></script>
+	<script src="app/agroWebApp/filters/nameProductFilter.js"></script>
+	<script src="app/agroWebApp/services/config.js"></script>
+	<script src="app/agroWebApp/services/authService.js"></script>
+	<script src="app/agroWebApp/services/httpInterceptors.js"></script>
+	<script src="app/agroWebApp/services/customersBreezeService.js"></script>
+	<script src="app/agroWebApp/services/customersService.js"></script>
+	<script src="app/agroWebApp/services/dataService.js"></script>
+	<script src="app/agroWebApp/services/modalService.js"></script>
+	<script src="app/agroWebApp/controllers/navbarController.js"></script>
+	<script src="app/agroWebApp/controllers/loginController.js"></script>
+	<script src="app/agroWebApp/controllers/fazendas/fazendaController.js"></script>
+</body>
 </html>
+
+

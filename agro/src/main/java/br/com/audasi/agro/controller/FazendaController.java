@@ -1,10 +1,17 @@
 package br.com.audasi.agro.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.ws.RequestWrapper;
+
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,13 +45,25 @@ public class FazendaController {
 	}
 
 	@RequestMapping(value = "/fazenda", method = RequestMethod.POST)
-	@ResponseBody
-	public Fazenda adicionar(@RequestParam("nome") String nome) {
+	public @ResponseBody Fazenda adicionar(@RequestBody final String novaFazenda) {
 		Fazenda fazenda = new Fazenda();
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			fazenda =  mapper.readValue(novaFazenda, Fazenda.class);
+		} catch (JsonParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (JsonMappingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Conta conta = new Conta();
 		conta.setId(1);
 		fazenda.setConta(conta);
-		fazenda.setNome(nome);
+		fazenda.setNome(novaFazenda);
 		fazenda.setAtivo(true);
 		daoFazenda.persistir(fazenda);
 		return fazenda;
