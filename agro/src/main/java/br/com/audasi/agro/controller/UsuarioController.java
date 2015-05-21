@@ -2,6 +2,7 @@ package br.com.audasi.agro.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,11 +18,9 @@ public class UsuarioController {
 	@Autowired
 	private DAOUsuario daoUsuario;
 
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	@ResponseBody
-	public String autentica(@RequestParam("login") String login,
-			@RequestParam("senha") String senha) {
-		Usuario usuario = daoUsuario.getUsuario(login, senha);
+	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
+	public @ResponseBody String autentica(@RequestBody Usuario user) {
+		Usuario usuario = daoUsuario.getUsuario(user.getLogin(), user.getPassword());
 		if (usuario == null) {
 			return "Falha";
 		} else {

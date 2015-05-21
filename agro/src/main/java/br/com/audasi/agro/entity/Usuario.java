@@ -25,8 +25,8 @@ public class Usuario {
 	@Column(name = "login", nullable = false, length = 120)
 	private String login;
 
-	@Column(name = "senha", nullable = false, length = 120)
-	private String senha;
+	@Column(name = "password", nullable = false, length = 120)
+	private String password;
 
 	@ManyToOne
 	@JoinColumn(name = "idConta", nullable = false)
@@ -48,12 +48,12 @@ public class Usuario {
 		this.login = login;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Conta getConta() {

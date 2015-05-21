@@ -8,6 +8,6 @@ public interface DAOUsuario extends DAOBase<Usuario> {
 
 	public Usuario getUsuario(String login);
 	
-	public Usuario getUsuario(String login, String senha);
+	public Usuario getUsuario(String login, String password);
 
 }
