@@ -20,7 +20,8 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
 	public @ResponseBody String autentica(@RequestBody Usuario user) {
-		Usuario usuario = daoUsuario.getUsuario(user.getLogin(), user.getPassword());
+		Usuario usuario = daoUsuario.getUsuario(user.getLogin(),
+				user.getPassword());
 		if (usuario == null) {
 			return "Falha";
 		} else {
