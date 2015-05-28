@@ -16,7 +16,7 @@
 				login : email,
 				password : password
 			}).then(function(results) {
-				var loggedIn = results.data.status;
+				var loggedIn = results;
 				;
 				changeAuth(loggedIn);
 				return loggedIn;
@@ -25,7 +25,7 @@
 
 		factory.logout = function() {
 			return $http.post(serviceBase + 'logout').then(function(results) {
-				var loggedIn = !results.data.status;
+				var loggedIn = !sucesso;
 				changeAuth(loggedIn);
 				return loggedIn;
 			});

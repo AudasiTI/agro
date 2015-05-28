@@ -1,54 +1,55 @@
-﻿(function () {
+﻿(function() {
 
-    var injectParams = ['$scope', '$location', 'config', 'authService'];
+	var injectParams = [ '$scope', '$location', 'config', 'authService' ];
 
-    var NavbarController = function ($scope, $location, config, authService) {
-        var vm = this,
-            appTitle = 'Fazenda Digital';
+	var NavbarController = function($scope, $location, config, authService) {
+		var vm = this, appTitle = 'Fazenda Digital';
 
-        vm.isCollapsed = false;
-        vm.appTitle = (config.useBreeze) ? appTitle + ' Breeze' : appTitle;
+		vm.isCollapsed = false;
+		vm.appTitle = appTitle;
 
-        vm.highlight = function (path) {
-            return $location.path().substr(0, path.length) === path;
-        };
+		vm.highlight = function(path) {
+			return $location.path().substr(0, path.length) === path;
+		};
 
-        vm.loginOrOut = function () {
-            setLoginLogoutText();
-            var isAuthenticated = authService.user.isAuthenticated;
-            if (isAuthenticated) { //logout 
-                authService.logout().then(function () {
-                    $location.path('/');
-                    return;
-                });                
-            }
-            redirectToLogin();
-        };
+		vm.loginOrOut = function() {
+			setLoginLogoutText();
+			var isAuthenticated = authService.user.isAuthenticated;
+			if (isAuthenticated) { // logout
+				authService.logout().then(function() {
+					$location.path('/');
+					return;
+				});
+			}
+			redirectToLogin();
+		};
 
-        function redirectToLogin() {
-            var path = '/login' + $location.$$path;
-            $location.replace();
-            $location.path(path);
-        }
+		function redirectToLogin() {
+			var path = '/login' + $location.$$path;
+			$location.replace();
+			$location.path(path);
+		}
 
-        $scope.$on('loginStatusChanged', function (loggedIn) {
-            setLoginLogoutText(loggedIn);
-        });
+		$scope.$on('loginStatusChanged', function(loggedIn) {
+			setLoginLogoutText(loggedIn);
+		});
 
-        $scope.$on('redirectToLogin', function () {
-            redirectToLogin();
-        });
+		$scope.$on('redirectToLogin', function() {
+			redirectToLogin();
+		});
 
-        function setLoginLogoutText() {
-            vm.loginLogoutText = (authService.user.isAuthenticated) ? 'Logout' : 'Login';
-        }
+		function setLoginLogoutText() {
+			vm.loginLogoutText = (authService.user.isAuthenticated) ? 'Logout'
+					: 'Login';
+		}
 
-        setLoginLogoutText();
+		setLoginLogoutText();
 
-    };
+	};
 
-    NavbarController.$inject = injectParams;
+	NavbarController.$inject = injectParams;
 
-    angular.module('agroWebApp').controller('NavbarController', NavbarController);
+	angular.module('agroWebApp').controller('NavbarController',
+			NavbarController);
 
 }());

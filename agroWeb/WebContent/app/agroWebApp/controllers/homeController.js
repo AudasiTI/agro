@@ -2,7 +2,7 @@
 
 	var injectParams = [ '$location', '$routeParams', 'authService' ];
 
-	var LoginController = function($location, $routeParams, authService) {
+	var HomeController = function($location, $routeParams, authService) {
 		var vm = this, path = '/home';
 
 		vm.email = null;
@@ -27,8 +27,8 @@
 		};
 	};
 
-	LoginController.$inject = injectParams;
+	HomeController.$inject = injectParams;
 
-	angular.module('agroWebApp').controller('LoginController', LoginController);
+	angular.module('agroWebApp').controller('HomeController', HomeController);
 
 }());

@@ -4,11 +4,11 @@
 			'wc.directives', 'ui.bootstrap', 'breeze.angular' ]);
 
 	app.config([ '$routeProvider', function($routeProvider) {
-		var viewBase = '/agroWeb/app/agroWebApp/views/';
+		var viewBase = '/fazendadigital/app/agroWebApp/views/';
 
-		$routeProvider.when('/fazenda', {
-			controller : 'fazendaControler',
-			templateUrl : viewBase + 'fazendas/fazendas.html',
+		$routeProvider.when('/home', {
+			controller : 'HomeControler',
+			templateUrl : viewBase + 'home.html',
 			controllerAs : 'vm',
 			secure : true
 		}).when('/login/:redirect*?', {

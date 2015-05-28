@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html data-ng-app="agroWebApp">
+<html ng-app="agroWebApp">
 <head>
 <title>Fazenda Digital</title>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -14,67 +14,27 @@
 		data-ng-controller="NavbarController as vm">
 		<nav class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle"
-					data-ng-click="vm.isCollapsed = !vm.isCollapsed">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
 				<a class="navbar-brand" href="#/"> <img
 					src="Content/images/people.png" alt="logo"> <span
 					class="appTitle">{{ vm.appTitle }}</span>
 				</a>
 			</div>
 			<div class="nav-container" data-collapse="isCollapsed">
-
 				<!-- With menu-highlighter directive -->
 				<ul class="nav navbar-nav nav-pills navBarPadding"
 					data-menu-highlighter data-highlight-class-name="active">
-					<li><a href="#/fazenda">Fazendas</a></li>
 					<li id="nav-login" data-ng-click="vm.loginOrOut()">
 						<!-- href not used but needed to compare against path in menu-highlighter -->
 						<a data-href="#/login">{{ vm.loginLogoutText }}</a>
 					</li>
 				</ul>
-
-				<!-- Without menu-highlighter directive -->
-				<!--<ul class="nav navbar-nav nav-pills navBarPadding">
-                    <li data-ng-class="{'active':highlight('/customers')}"><a href="#/customers">Customers</a></li>
-                    <li data-ng-class="{'active':highlight('/orders')}"><a href="#/orders">Orders</a></li>
-                    <li data-ng-class="{'active':highlight('/about')}"><a href="#/about">About</a></li>
-                    <li data-ng-class="{'active':highlight('/login')}" id="nav-login"
-                        data-ng-click="loginOrOut()">
-                        <a>{{ loginLogoutText }}</a>
-                    </li>
-                </ul>-->
 			</div>
 		</nav>
 	</header>
+	<div class="nav-container" ng-view style="margin-top: 100px"></div>
 
-	<div class="slide-animation-container">
-		<div data-ng-view id="ng-view" class="slide-animation"></div>
-	</div>
 
-	<div id="footer">
-		<div class="navbar navbar-fixed-bottom">
-			<div class="navbar-inner footer">
-				<div class="container">
-					<footer>
-						<div class="row">
-							<div class="col-md-12">
-								Created by <a href="http://twitter.com/DanWahlin"
-									target="_blank">Dan Wahlin</a>
-							</div>
-						</div>
-					</footer>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<div data-wc-overlay data-wc-overlay-delay="300">
-		<br /> <img src="Content/images/spinner.gif" />&nbsp;&nbsp;Loading
-	</div>
 
 	<!-- 3rd party libraries -->
 	<script
@@ -108,6 +68,7 @@
 	<script src="app/agroWebApp/controllers/navbarController.js"></script>
 	<script src="app/agroWebApp/controllers/loginController.js"></script>
 	<script src="app/agroWebApp/controllers/fazendas/fazendaController.js"></script>
+	<script src="app/agroWebApp/controllers/homeController.js"></script>	
 </body>
 </html>
 
