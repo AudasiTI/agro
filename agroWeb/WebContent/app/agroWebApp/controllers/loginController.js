@@ -3,7 +3,7 @@
 	var injectParams = [ '$location', '$routeParams', 'authService' ];
 
 	var LoginController = function($location, $routeParams, authService) {
-		var vm = this, path = '/home';
+		var vm = this, path = '/';
 
 		vm.email = null;
 		vm.password = null;
@@ -21,10 +21,10 @@
 				if (status && $routeParams && $routeParams.redirect) {
 					path = path + $routeParams.redirect;
 				}
-
 				$location.path(path);
 			});
 		};
+
 	};
 
 	LoginController.$inject = injectParams;

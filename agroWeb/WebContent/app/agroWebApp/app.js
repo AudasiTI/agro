@@ -6,9 +6,9 @@
 	app.config([ '$routeProvider', function($routeProvider) {
 		var viewBase = '/fazendadigital/app/agroWebApp/views/';
 
-		$routeProvider.when('/home', {
-			controller : 'HomeControler',
-			templateUrl : viewBase + 'home.html',
+		$routeProvider.when('/producao', {
+			controller : 'ProducaoController',
+			templateUrl : viewBase + 'producao/producao.html',
 			controllerAs : 'vm',
 			secure : true
 		}).when('/login/:redirect*?', {

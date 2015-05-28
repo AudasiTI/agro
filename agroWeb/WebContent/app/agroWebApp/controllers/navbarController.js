@@ -39,8 +39,9 @@
 		});
 
 		function setLoginLogoutText() {
-			vm.loginLogoutText = (authService.user.isAuthenticated) ? 'Logout'
+			vm.loginLogoutText = (authService.user.isAuthenticated) ? 'Sair'
 					: 'Login';
+			$scope.logged = !authService.user.isAuthenticated;
 		}
 
 		setLoginLogoutText();

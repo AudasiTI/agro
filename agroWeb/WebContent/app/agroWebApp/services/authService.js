@@ -25,7 +25,7 @@
 
 		factory.logout = function() {
 			return $http.post(serviceBase + 'logout').then(function(results) {
-				var loggedIn = !sucesso;
+				var loggedIn = true; //!results;
 				changeAuth(loggedIn);
 				return loggedIn;
 			});
