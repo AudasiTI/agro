@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.audasi.agro.entity.Status;
 import br.com.audasi.agro.entity.Usuario;
 import br.com.audasi.agro.model.dao.DAOUsuario;
 
@@ -19,13 +20,13 @@ public class UsuarioController {
 	private DAOUsuario daoUsuario;
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST, headers = "Accept=application/json")
-	public @ResponseBody String autentica(@RequestBody Usuario user) {
+	public @ResponseBody Status autentica(@RequestBody Usuario user) {
 		Usuario usuario = daoUsuario.getUsuario(user.getLogin(),
 				user.getPassword());
 		if (usuario == null) {
-			return "Falha";
+			return new Status(false);
 		} else {
-			return "Sucesso";
+			return new Status(true);
 		}
 	}
 
