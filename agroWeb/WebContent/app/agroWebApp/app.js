@@ -11,6 +11,11 @@
 			templateUrl : viewBase + 'producao/producao.html',
 			controllerAs : 'vm',
 			secure : true
+		}).when('/fazendas', {
+			controller : 'FazendaController',
+			templateUrl : viewBase + 'fazendas/fazendas.html',
+			controllerAs : 'vm',
+			secure : true
 		}).when('/login/:redirect*?', {
 			controller : 'LoginController',
 			templateUrl : viewBase + 'login.html',

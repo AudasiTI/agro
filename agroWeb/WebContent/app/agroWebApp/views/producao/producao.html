@@ -1,23 +1,10 @@
-<div>
-	<div class="nav-container" ng-include="home.html"
-		style="margin-top: 50px"></div>
-
-	<div ng-controller="ProducaoController as vm" >
-		<accordion-group heading="Static Header, initially expanded"
-			is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
-		This content is straight in the template. </accordion-group>
-		<accordion-group heading="{{group.title}}" ng-repeat="group in groups">
-		{{group.content}} </accordion-group>
-		<accordion-group heading="Dynamic Body Content">
-		<p>The body of the accordion group grows to fit the contents</p>
-		<button class="btn btn-default btn-sm" ng-click="addItem()">Add
-			Item</button>
-		<div ng-repeat="item in items">{{item}}</div>
-		</accordion-group>
-		<accordion-group is-open="status.open"> <accordion-heading>
-		I can have markup, too! <i class="pull-right glyphicon"
-			ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-		</accordion-heading> This is just some content to illustrate fancy headings. </accordion-group>
-		</accordion>
-	</div>
+<div ng-controller="ProducaoController" style="width: 15%">
+	<accordion close-others="oneAtATime"> <accordion-group
+		heading="{{group.title}}" ng-repeat="group in groups">
+	<ul class="nav navbar-nav nav-pills navBarPadding"
+		data-menu-highlighter data-highlight-class-name="active"
+		ng-repeat="item in group.itens">
+		<li><a href={{item.url}}>{{item.nome}}</a></li>
+	</ul>
+	</accordion-group> </accordion>
 </div>

@@ -1,29 +1,38 @@
 ﻿(function() {
 
-	var injectParams = [ '$location', '$routeParams', 'authService' ];
+	var injectParams = [ '$scope', '$location', 'config' ];
 
-	var ProducaoController = function($location, $routeParams, authService) {
+	var ProducaoController = function($scope, $location, config) {
 		var vm = this, path = '/';
 
-		vm.email = null;
-		vm.password = null;
-		vm.errorMessage = null;
+		$scope.oneAtATime = true;
 
-		vm.login = function() {
-			authService.login(vm.email, vm.password).then(function(status) {
-				// $routeParams.redirect will have the route
-				// they were trying to go to initially
-				if (!status) {
-					vm.errorMessage = 'Unable to login';
-					return;
-				}
+		$scope.groups = [ {
+			title : 'Atividades',
+			itens : [ {
+				nome : 'Teste',
+				url : '/teste'
+			}, {
+				nome : 'Testando',
+				url : '/testando'
+			} ]
+		}, {
+			title : 'Talhões',
+			itens : [ {
+				nome : 'Listar',
+				url : '/talhao'
+			} ]
+		}, {
+			title : 'Safras',
+			itens : [ {
+				nome : 'Teste',
+				url : '/teste'
+			} ]
+		} ];
 
-				if (status && $routeParams && $routeParams.redirect) {
-					path = path + $routeParams.redirect;
-				}
-
-				$location.path(path);
-			});
+		$scope.status = {
+			isFirstOpen : true,
+			isFirstDisabled : false
 		};
 	};
 

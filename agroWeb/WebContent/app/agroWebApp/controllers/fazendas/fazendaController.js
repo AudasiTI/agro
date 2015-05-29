@@ -1,173 +1,54 @@
-﻿(function() {
+﻿angular.module('agroWebApp').controller('FazendaController',
+		function($scope, $modal, $log) {
 
-	var injectParams = [ '$location', '$filter', '$window', '$timeout',
-			'authService', 'dataService', 'modalService' ];
+			$scope.items = [ 'item1', 'item2', 'item3' ];
 
-	var fazendaController = function($location, $filter, $window, $timeout,
-			authService, dataService, modalService) {
+			$scope.animationsEnabled = true;
 
-		var vm = this;
+			$scope.open = function(size) {
 
-		vm.customers = [];
-		vm.filteredCustomers = [];
-		vm.filteredCount = 0;
-		vm.orderby = 'lastName';
-		vm.reverse = false;
-		vm.searchText = null;
-		vm.cardAnimationClass = '.card-animation';
+				var modalInstance = $modal.open({
+					animation : $scope.animationsEnabled,
+					templateUrl : '/fazendadigital/app/agroWebApp/views/about.html',
+					controller : 'ModalInstanceCtrl',
+					size : size,
+					resolve : {
+						items : function() {
+							return $scope.items;
+						}
+					}
+				});
 
-		// paging
-		vm.totalRecords = 0;
-		vm.pageSize = 10;
-		vm.currentPage = 1;
-
-		vm.pageChanged = function(page) {
-			vm.currentPage = page;
-			getCustomersSummary();
-		};
-
-		vm.deleteCustomer = function(id) {
-			if (!authService.user.isAuthenticated) {
-				$location.path(authService.loginPath + $location.$$path);
-				return;
-			}
-
-			var cust = getCustomerById(id);
-			var custName = cust.firstName + ' ' + cust.lastName;
-
-			var modalOptions = {
-				closeButtonText : 'Cancel',
-				actionButtonText : 'Delete Customer',
-				headerText : 'Delete ' + custName + '?',
-				bodyText : 'Are you sure you want to delete this customer?'
+				modalInstance.result.then(function(selectedItem) {
+					$scope.selected = selectedItem;
+				}, function() {
+					$log.info('Modal dismissed at: ' + new Date());
+				});
 			};
 
-			modalService
-					.showModal({}, modalOptions)
-					.then(
-							function(result) {
-								if (result === 'ok') {
-									dataService
-											.deleteCustomer(id)
-											.then(
-													function() {
-														for (var i = 0; i < vm.customers.length; i++) {
-															if (vm.customers[i].id === id) {
-																vm.customers
-																		.splice(
-																				i,
-																				1);
-																break;
-															}
-														}
-														filterCustomers(vm.searchText);
-													},
-													function(error) {
-														$window
-																.alert('Error deleting customer: '
-																		+ error.message);
-													});
-								}
-							});
-		};
+			$scope.toggleAnimation = function() {
+				$scope.animationsEnabled = !$scope.animationsEnabled;
+			};
 
-		vm.DisplayModeEnum = {
-			Card : 0,
-			List : 1
-		};
+		});
 
-		vm.changeDisplayMode = function(displayMode) {
-			switch (displayMode) {
-			case vm.DisplayModeEnum.Card:
-				vm.listDisplayModeEnabled = false;
-				break;
-			case vm.DisplayModeEnum.List:
-				vm.listDisplayModeEnabled = true;
-				break;
-			}
-		};
+// Please note that $modalInstance represents a modal window (instance)
+// dependency.
+// It is not the same as the $modal service used above.
 
-		vm.navigate = function(url) {
-			$location.path(url);
-		};
+angular.module('agroWebApp').controller('ModalInstanceCtrl',
+		function($scope, $modalInstance, items) {
 
-		vm.setOrder = function(orderby) {
-			if (orderby === vm.orderby) {
-				vm.reverse = !vm.reverse;
-			}
-			vm.orderby = orderby;
-		};
+			$scope.items = items;
+			$scope.selected = {
+				item : $scope.items[0]
+			};
 
-		vm.searchTextChanged = function() {
-			filterCustomers(vm.searchText);
-		};
+			$scope.ok = function() {
+				$modalInstance.close($scope.selected.item);
+			};
 
-		function init() {
-			// createWatches();
-			getCustomersSummary();
-		}
-
-		// function createWatches() {
-		// //Watch searchText value and pass it and the customers to
-		// nameCityStateFilter
-		// //Doing this instead of adding the filter to ng-repeat allows it to
-		// only be run once (rather than twice)
-		// //while also accessing the filtered count via vm.filteredCount above
-
-		// //Better to handle this using ng-change on <input>. See
-		// searchTextChanged() function.
-		// vm.$watch("searchText", function (filterText) {
-		// filterCustomers(filterText);
-		// });
-		// }
-
-		function getCustomersSummary() {
-			dataService.getCustomersSummary(vm.currentPage - 1, vm.pageSize)
-					.then(
-							function(data) {
-								vm.totalRecords = data.totalRecords;
-								vm.customers = data.results;
-								filterCustomers(''); // Trigger initial
-								// filter
-
-								$timeout(function() {
-									vm.cardAnimationClass = ''; // Turn off
-									// animation
-									// since it
-									// won't keep up
-									// with
-									// filtering
-								}, 1000);
-
-							},
-							function(error) {
-								$window.alert('Sorry, an error occurred: '
-										+ error.data.message);
-							});
-		}
-
-		function filterCustomers(filterText) {
-			vm.filteredCustomers = $filter("nameCityStateFilter")(vm.customers,
-					filterText);
-			vm.filteredCount = vm.filteredCustomers.length;
-		}
-
-		function getCustomerById(id) {
-			for (var i = 0; i < vm.customers.length; i++) {
-				var cust = vm.customers[i];
-				if (cust.id === id) {
-					return cust;
-				}
-			}
-			return null;
-		}
-
-		init();
-	};
-
-	fazendaController.$inject = injectParams;
-
-	angular.module('agroWebApp').controller('fazendaController',
-			fazendaController);
-
-}());
+			$scope.cancel = function() {
+				$modalInstance.dismiss('cancel');
+			};
+		});
